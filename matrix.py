@@ -115,6 +115,18 @@ class Matrix:
         """
         return self.matrix[row_index][col_index]
 
+    def transpose_matrix(self):
+    """
+    function to transpose a matrix - i.e. swap the columns with the rows
+    """
+        pass
+
+    def invert_matrix(self):
+    """
+    function to invert a matrix - this operation creates a matrix which 
+    when operated onto the original matrix will return the identity
+    """
+        pass
 
 def matrix_add(matrix1, matrix2):
     """
@@ -147,7 +159,11 @@ def matrix_multiplication(matrix1, matrix2):
     if matrix1.dims[1] != matrix2.dims[0]:
         raise ValueError("the number of columns of input1 must equal the"\
         "number of rows of input2")
-    #TODO
+
+    new_matrix = [[]]
+
+
+    return Matrix(new_matrix)
 
 def test_matrix(input_list):
     """
@@ -214,5 +230,11 @@ test_add_matrix1.print_matrix()
 test_add_matrix2 = matrix_add(tm2, tm2)
 test_add_matrix2.print_matrix()
 
-
-
+#matrix multiplication tests
+mm1 = Matrix([[1,2],[3,4],[5,6]])
+mm2 = Matrix([[1,2,3,4],[5,6,7,8]])
+try:
+    matrix_multiplication(tm1,tm2).print_matrix()
+except:
+    print("fail")
+matrix_multiplication(mm1,mm2).print_matrix()
