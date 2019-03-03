@@ -2,17 +2,6 @@
 import numbers
 #test inputs
 
-# parse into a column
-test_input1 = [1,2,3,4,5,6,7,8,9]
-# parse into a matrix with the three sub lists the rows
-test_input2 = [[1,2,3],[4,5,6],[7,8,9]]
-#reject as data is wrong shape
-test_input3 = [[[1,2],[3,4]],[[5,6],[7,8]]]
-#reject as rows of inconsistent length
-test_input4 = [[1,2,3],[4,5],[7,8,9]]
-#reject as not all elements are numeric
-test_input5 = [1,2,"a"]
-
 class Matrix:
     """
     This class creates a simple matrix as an experiment in oop
@@ -96,25 +85,28 @@ class Matrix:
         """
         print the dimensions of the matrix
         """
-        pass
+        print(f"{len(self.matrix)} rows, {len(self.matrix[0])} columns")
+        print()
 
-    def select_column(self):
+    def select_column(self, col_index):
         """
         select a single column by index and return as a list
         """
-        pass
-
-    def select_row(self):
+        column = []
+        for row in self.matrix:
+            column.append(row[col_index])
+        return column
+    def select_row(self, row_index):
         """
         select a single row by index and return as a list
         """
-        pass
+        return self.matrix[row_index]
 
-    def select_element(self):
+    def select_element(self, row_index, col_index):
         """
         select a single element of the matrix and return as a list
         """
-        pass
+        return self.matrix[row_index][col_index]
 
 
 def test_matrix(input_file):
@@ -127,6 +119,19 @@ def test_matrix(input_file):
         return output
     except:
         print("fail")
+
+#tests
+# parse into a column
+test_input1 = [1,2,3,4,5,6,7,8,9]
+# parse into a matrix with the three sub lists the rows
+test_input2 = [[1,2,3],[4,5,6],[7,8,9]]
+#reject as data is wrong shape
+test_input3 = [[[1,2],[3,4]],[[5,6],[7,8]]]
+#reject as rows of inconsistent length
+test_input4 = [[1,2,3],[4,5],[7,8,9]]
+#reject as not all elements are numeric
+test_input5 = [1,2,"a"]
+
 
 #pass
 print("test1")
@@ -147,5 +152,13 @@ print("test5")
 test_matrix5 = test_matrix(test_input5)
 
 test_matrix1.print_matrix()
+test_matrix2.print_dims()
 test_matrix2.print_matrix()
+test_matrix1.print_dims()
 
+print(test_matrix1.select_column(4))
+print(test_matrix1.select_column(8))
+print(test_matrix1.select_row(0))
+print(test_matrix2.select_column(2))
+print(test_matrix2.select_row(2))
+print(test_matrix1.select_element(0,1))
