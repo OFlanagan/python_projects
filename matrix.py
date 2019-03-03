@@ -12,6 +12,8 @@ class Matrix:
         These matrices will be stored as a nested list and will have methods to access them like a matrix
         """
         self.matrix = self.handle_input(input_list)
+        self.dims = self.get_dims()
+
 
     def handle_input(self, input_list):
         """
@@ -80,12 +82,17 @@ class Matrix:
         print("")
 
 
+    def get_dims(self):
+        """
+        this function returns a list with the [number of rows, number of cols]
+        """
+        return [len(self.matrix), len(self.matrix[0])]
 
     def print_dims(self):
         """
         print the dimensions of the matrix
         """
-        print(f"{len(self.matrix)} rows, {len(self.matrix[0])} columns")
+        print(f"{self.dims[0]} rows, {self.dims[1]} columns")
         print()
 
     def select_column(self, col_index):
@@ -109,16 +116,50 @@ class Matrix:
         return self.matrix[row_index][col_index]
 
 
-def test_matrix(input_file):
+def matrix_add(matrix1, matrix2):
+    """
+    This function performs basic matrix addition on two matrices of the same 
+    size
+    """
+    #need to check that both objects are matrices
+    if isinstance(matrix1, Matrix) and isinstance(matrix2, Matrix) != True:
+        raise TypeError("both inputs must be of class matrix")
+    #need to check that both matrices are the same size
+    if matrix1.dims != matrix2.dims:
+        raise ValueError("both inputs must be of the same size")
+    #need to add the contents
+    for r_ind, row in enumerate(matrix1.matrix):
+        for c_ind, col in enumerate(row):
+           matrix1.matrix[r_ind][c_ind] += matrix2.matrix[r_ind][c_ind]
+    return matrix1
+
+def matrix_multiplication(matrix1, matrix2):
+    """
+    This function performs matrix multiplication ont two matrices
+    """
+    #need to make sure both inputs are matrices
+    if isinstance(matrix1, Matrix) and isinstance(matrix2, Matrix) != True:
+        raise TypeError("both inputs must be of class matrix")
+
+    #need to make sure that the two matrices are compatible
+    #i.e. the number of columns of matrix 1 equal the number of rows 
+    #of matrix 2
+    if matrix1.dims[1] != matrix2.dims[0]:
+        raise ValueError("the number of columns of input1 must equal the"\
+        "number of rows of input2")
+    #TODO
+
+def test_matrix(input_list):
     """
     simple test function for the Matrix class
     """
     try:
-        output = Matrix(input_file)
+        output = Matrix(input_list)
         print("pass")
         return output
     except:
         print("fail")
+
 
 #tests
 # parse into a column
@@ -140,7 +181,7 @@ tm1 = Matrix(test_input1)
 #pass
 print("test2")
 test_matrix2 = test_matrix(test_input2)
-Matrix(test_input2)
+tm2 = Matrix(test_input2)
 #fail
 print("test3")
 test_matrix3 = test_matrix(test_input3)
@@ -162,3 +203,16 @@ print(test_matrix1.select_row(0))
 print(test_matrix2.select_column(2))
 print(test_matrix2.select_row(2))
 print(test_matrix1.select_element(0,1))
+try:
+    test_add_matrix = matrix_add(tm1, tm2)
+except:
+    print("fail")
+
+print("Testing additions")
+test_add_matrix1 = matrix_add(tm1, tm1)
+test_add_matrix1.print_matrix()
+test_add_matrix2 = matrix_add(tm2, tm2)
+test_add_matrix2.print_matrix()
+
+
+
