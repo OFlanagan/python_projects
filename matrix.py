@@ -22,33 +22,74 @@ class Matrix:
         Initialise the matrix from a list - can be a nested listed up to two deep
         These matrices will be stored as a nested list and will have methods to access them like a matrix
         """
-        self.input_list = input_list
-        
-        try:
-            self.matrix = self.handle_input()
+        self.matrix = self.handle_input(input_list)
 
-    def handle_input(self):
+    def handle_input(self, input_list):
         """
         This function takes an input_list and shapes it into the required two level structure
         This function also includes error handling for unsupported data types and list shapes
         """
+
         #need to check that the object is a list
-        if type(self.input_list) != list:
+        if type(input_list) != list:
             raise TypeError("object must be a list")
+        if len(input_list) < 1:
+            raise ValueError("list must have an element")
         #need to check that there are 1 or two levels of nested lists
         #need to check that all objects are of type numeric
-        for i in self.input_list:
-            if isinstance(i, numbers.Number) != True:
-                raise TypeError("all elements must be numeric")
-        #need to check that all 2nd level sublists are of same length
+        #we can check these at the same time
+        #we check the type of the first element and see if it is a list or a
+        #numeric
+        if type(input_list[0]) == list:
+            # if it is a list then we record the length of the list and ensure
+            # that all elements of input_list are lists of the same length as the 
+            #first list
+            list_len = len(input_list[0])
+            #at this stage we have established that the first element of the
+            #input list is a list, so we need to check that all list elements
+            # are lists of the same length as the first element
+            # we also need to check that the elements of each list are all numeric
+            for i in input_list:
+                if type(i) != list:
+                    raise TypeError("all elements of a nested list must be lists")
+                if len(i) != list_len:
+                    raise ValueError("all elements of a nested list must be"\
+                    "of same length")
+                for j in i:
+                    if isinstance(j, numbers.Number) != True:
+                        raise TypeError("all elements of sublists must be numeric")
+            #if the input list passes our tests, it satisfies the requirements
+            #for our matrix and so we will just use it as our matrix
+            return input_list
+
+        elif isinstance(input_list[0], numbers.Number) == True:
+            #if our input list is a list of numbers we will create it as a sublist
+            return_list = [[]]
+            for i in input_list:
+                if isinstance(i, numbers.Number) != True:
+                    raise TypeError("all elements must be numeric")
+                else:
+                    return_list[0].append(i)
+            return return_list
+        else:
+            raise TypeError("A matrix must be made up of a list of numbers," \
+            "or a list of list of numbers")
+        # if it is numeric then all elements of the list must be numeric
+
 
 
 
     def print_matrix(self):
         """
         print the matrix to the console
+        this function provides no return and is called soley for its side effects
         """
-        pass
+        for i in self.matrix:
+            for j in i:
+                print(f"{j} ",end="")
+            print("")
+        print("")
+
 
 
     def print_dims(self):
@@ -81,17 +122,20 @@ def test_matrix(input_file):
     simple test function for the Matrix class
     """
     try:
-        output = Matrix(input)
+        output = Matrix(input_file)
         print("pass")
+        return output
     except:
         print("fail")
-    
+
 #pass
 print("test1")
 test_matrix1 = test_matrix(test_input1)
+tm1 = Matrix(test_input1)
 #pass
 print("test2")
 test_matrix2 = test_matrix(test_input2)
+Matrix(test_input2)
 #fail
 print("test3")
 test_matrix3 = test_matrix(test_input3)
