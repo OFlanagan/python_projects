@@ -75,6 +75,9 @@ class Matrix:
         print the matrix to the console
         this function provides no return and is called soley for its side effects
         """
+        #should extend this function to fix spacing of columns
+        #this could be done by padding each element in a column with spaces
+        #in order to bring all elements of a column to the same width
         for i in self.matrix:
             for j in i:
                 print(f"{j} ",end="")
@@ -116,21 +119,21 @@ class Matrix:
         return self.matrix[row_index][col_index]
 
     def transpose_matrix(self):
-    """
-    function to transpose a matrix - i.e. swap the columns with the rows
-    """
+        """
+        function to transpose a matrix - i.e. swap the columns with the rows
+        """
         pass
 
     def invert_matrix(self):
-    """
-    function to invert a matrix - this operation creates a matrix which 
-    when operated onto the original matrix will return the identity
-    """
+        """
+        function to invert a matrix - this operation creates a matrix which
+        when operated onto the original matrix will return the identity
+        """
         pass
 
 def matrix_add(matrix1, matrix2):
     """
-    This function performs basic matrix addition on two matrices of the same 
+    This function performs basic matrix addition on two matrices of the same
     size
     """
     #need to check that both objects are matrices
@@ -159,8 +162,15 @@ def matrix_multiplication(matrix1, matrix2):
     if matrix1.dims[1] != matrix2.dims[0]:
         raise ValueError("the number of columns of input1 must equal the"\
         "number of rows of input2")
+    num_rows = matrix1.get_dims()[0]
+    num_cols = matrix2.get_dims()[1]
 
-    new_matrix = [[]]
+    new_matrix = [[0 for i in range(num_cols)] for j in range(num_rows)]
+
+    for r in range(num_rows):
+        for c in range(num_cols):
+            for i in range(len(matrix1.select_row(r))):
+                new_matrix[r][c] += matrix1.select_row(r)[i] * matrix2.select_column(c)[i]
 
 
     return Matrix(new_matrix)
@@ -231,6 +241,7 @@ test_add_matrix2 = matrix_add(tm2, tm2)
 test_add_matrix2.print_matrix()
 
 #matrix multiplication tests
+print("testing multipication")
 mm1 = Matrix([[1,2],[3,4],[5,6]])
 mm2 = Matrix([[1,2,3,4],[5,6,7,8]])
 try:
@@ -238,3 +249,6 @@ try:
 except:
     print("fail")
 matrix_multiplication(mm1,mm2).print_matrix()
+mm3 = Matrix([[12,5,6,8,23],[3,6,343,6,8],[1,2,5,8,4]])
+mm4 = Matrix([[1,0,0,0,0],[0,1,0,0,0],[0,0,1,0,0],[0,0,0,1,0],[0,0,0,0,1]])
+matrix_multiplication(mm3,mm4).print_matrix()
