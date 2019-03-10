@@ -132,6 +132,13 @@ class  DecisionTree:
         print(labels)
         self.buildTree (features, labels)
 
+        
+    def find_best_feature(self, features, labels):
+        """
+        Function to identify the best feature to split on
+        """
+        pass
+        
     def buildTree (self, features, labels):
         numInstances = len(labels)
         nodeInformation = numInstances * computeEntropy(labels)
@@ -143,6 +150,8 @@ class  DecisionTree:
             return
 
         # First find the best feature for this node
+        # need to replace with find_best_feature function
+        
         bestFeature = None
         bestInformationGain = np.NINF
         bestGainRatio = np.NINF
