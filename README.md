@@ -1,3 +1,13 @@
+This repository is a set of my python projects that I am working on to develop my python skills. 
+
+Subprojects:
+ * Matrix
+ * rforest
+
+##matrix
+This is a simple implementation of a matrix class using python lists. It was a simple excercise in object oriented programming and pep8 compliance.
+
+##rforest
 This is an implementation of the random forest algorithm. The purpose of this project is an excercise to help me to develop my python programming skills.
 The goal is to develop an object oriented implementation of the random forest algorithm with permuation importance using numpy as the only dependency.
 I also aim to use Numba to accelerate the code and compile it for GPU as an interesting experiment.
