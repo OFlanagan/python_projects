@@ -1,6 +1,7 @@
 '''
 Other reference
 https://en.wikipedia.org/wiki/ID3_algorithm
+https://medium.com/deep-math-machine-learning-ai/chapter-4-decision-trees-algorithms-b93975f7a1f1
 
 implementing a decision tree based off of this pseudocode
 http://www.cs.cmu.edu/~bhiksha/courses/10-601/decisiontrees/
